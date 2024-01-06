@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="nestor-index.css" media="screen" rel="stylesheet" type="text/css"/>
+        <link href="nestor-docs.css" media="screen" rel="stylesheet" type="text/css"/>
+        <title>
+            NESTOR - Natural languagE to Symbolic form TranslatOR (offline)
+        </title>
+    </head>
+
+
+    <body>
+
+        <div class="header">
+            <div id="headerTextNESTOR" class="headerText">NESTOR - Natural languagE to Symbolic form TranslatOR</div>
+        </div>
+
+        <div class="topnav">
+            <a href="index.html">Home</a>
+            <a class="active" href="docs.html">About</a>
+        </div>
+
+        <div class="body-container docs">
+
+            <div class="docs-body">
+
+                <div id="main-body" class="body-layout">
+
+                    <h3 id="Description">Description</h3>
+                    <p>
+                        NESTOR is a white-box <b>N</b>atural languag<b>E</b> to <b>S</b>mbolic form <b>T</b>ranslat<b>OR</b>
+                    </p>
+                    <p>
+                        The implementation of the translation pipeline is provided by NESTOR Web Service. You can view Web Service specification <a href="#" id="server-link" target="_blank" rel="noopener noreferrer" class="text-link">Server URL</a>.
+                    </p>
+
+                    <h3 id="Related-Work">Related Work</h3>
+                    <ul>
+                        <li><a href="https://cognition.ouc.ac.cy/loizos/papers/Michael_2019_MachineCoaching.pdf" target="_blank" rel="noopener noreferrer"><span class="text-link">Machine Coaching</span></a>, <i style="font-size:11pt">Loizos Michael</i></li>
+                        <li><a href="http://cognition.ouc.ac.cy/prudens/" target="_blank" rel="noopener noreferrer"><span class="text-link">Prudens Web Page</span></a></li>
+                        <li><a href="http://ceur-ws.org/Vol-2935/paper3.pdf" target="_blank" rel="noopener noreferrer"><span class="text-link">Knowledge-Based Translation of Natural Language into Symbolic Form</span></a>, <i style="font-size:11pt">Christodoulos Ioannou and Loizos Michael</i></li>
+                        <li><a href="https://ceur-ws.org/Vol-3208/paper4.pdf" target="_blank" rel="noopener noreferrer"><span class="text-link">Machine Coaching with Proxy Coaches</span></a>, <i style="font-size:11pt">Vassilis Markos, Marios Thoma and Loizos Michael</i></li>
+                        <li><a href="#" target="_blank" rel="noopener noreferrer"><span class="text-link">An Argumentation-Based Language for Cognitive Assistants</span></a>, <i style="font-size:11pt">Vassilis Markos and Loizos Michael</i></li>
+                    </ul>
+
+                    <h3 id="Contact-Us">Contact Us</h3>
+                    <p></p>
+                    <p>
+                        <a href="mailto:Christodoulos.Ioannou@st.ouc.ac.cy"><span class="text-link">Christodoulos Ioannou</span></a>, <a href="mailto:loizos@ouc.ac.cy"><span class="text-link">Loizos Michael</span></a>
+                    </p>
+                    <p>
+                        <a href="https://cognition.ouc.ac.cy/cclab/" target="_blank" rel="noopener noreferrer"><span class="text-link">Computational Cognition Lab</span></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="nestor-webcalls.js"></script>
+        <script type="text/javascript" src="nestor-docs.js"></script>
+        <script>
+            // Get service URL
+            document.addEventListener('DOMContentLoaded', function() {
+                var link = document.getElementById('server-link');
+                if (link != null) {
+                    link.href = getServerSwaggerURL();
+                    link.textContent = 'here';
+                }
+            });
+        </script>
+
+    </body>
+</html>
