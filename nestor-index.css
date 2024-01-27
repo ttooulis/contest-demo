@@ -317,9 +317,9 @@ body {
     /* Position the tooltip */
     position: absolute;
     z-index: 9999;
-    top: 100%;
+    top: 110%;
     left: 50%;
-    margin-left: -50px; /* Use half of the width (120/2 = 60), to center the tooltip */
+    margin-left: -50px; /* Use half of the width (100/2 = 50), to center the tooltip */
 }
 
 /* Not required now because JS is used for displaying the tooltip to support timeout
