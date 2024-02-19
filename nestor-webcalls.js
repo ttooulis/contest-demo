@@ -1,4 +1,5 @@
-var serverURL='https://dynamic---nestor-service-pec5yiptqq-uc.a.run.app';
+var serverURL='https://nestor.at.zaabt.com';
+//var serverURL='https://dynamic---nestor-service-pec5yiptqq-uc.a.run.app';
 //var serverURL='http://localhost:8085';
 
 var responseJSON = '{ "message": "Empty Message", "resultCode" : -1, "textData" : "", "jsondata" : "" }';
