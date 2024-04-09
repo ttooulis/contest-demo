@@ -1,8 +1,6 @@
-var serverURL='https://nestor.at.zaabt.com';
-//var serverURL='https://dynamic---nestor-service-pec5yiptqq-uc.a.run.app';
-//var serverURL='http://localhost:8085';
+var serverURL='https://us-central1-prudens---dev.cloudfunctions.net';
 
-var responseJSON = '{ "message": "Empty Message", "resultCode" : -1, "textData" : "", "jsondata" : "" }';
+responseJSON = '{ "context": [], "inferences" : [], "facts" : [], "graph" : {}, "dilemmas" : [], "defeatedRules" : [], logs : [] }';
 
 var translationSettings = JSON.parse('{ "NLP_CreateCorefPOS": "NN|NNP|NNS", "Policy_Language" : "prudensjs-web", "Policy_PredicateMode" : 0, "Policy_VersionPredicate" : "metakbinfo(version);", "Policy_VersionDataPredicate" : "metakbinfo_data", "Policy_GeneratePredicate" : "!generate", "Policy_ArgumentSeparator" : "args", "Policy_PredicateSeparator" : "next", "Policy_VarPlaceholder" : "vph_", "Policy_DynamicVarPlaceholder" : "dvph_", "Policy_NegationConstant" : "negation", "Policy_ActionConstant" : "action", "PrudensJava_RuleImportance" : "desc", "Generate_PredNameConcatChar" : "", "Generate_PredNameCapitalize" : true, "Generate_PredNameCapitalizeExceptions" : "-|!|(|)", "Generate_NeckSymbol" : "implies", "Generate_ConflictNeckSymbol" : "#", "Generate_AddName" : false, "Generate_NameSeparator" : "::", "Generate_VariableName" : "X", "Generate_IgnoreBodyGroups" : true }');
 
@@ -11,16 +9,23 @@ const defaultTranslationPolicy = '@Knowledge\nE001 :: cop(W1, P1, be, PBe),\n   
 var activeTranslationPolicy = defaultTranslationPolicy;
 
 
-const nestor_getInfo = async () => {
+const prudens_ping = async () => {
 
-	responseJSON = '{ "message": "Empty Message", "resultCode" : -1, "textData" : "", "jsondata" : "" }';
+	responseJSON = '{ "context": [], "inferences" : [], "facts" : [], "graph" : {}, "dilemmas" : [], "defeatedRules" : [], logs : [] }';
 
     try {
 
-		let serviceURL = serverURL + '/control?command=4';
+		let serviceURL = serverURL + '/app/deduce';
 		console.log(serviceURL);
 
-		const response = await fetch(serviceURL);
+		const response = await fetch(serviceURL, {
+			method: 'POST',
+			body: JSON.stringify({policyString: "@KnowledgeBase C001 :: ping implies echo;", contextString: "ping;"}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+
 		if (!response.ok) {
 			console.log(response);
 			throw new Error(`Error! Status: ${response.status}`);
@@ -31,8 +36,56 @@ const nestor_getInfo = async () => {
 	}
 
 	catch (err) {
+		responseJSON = '{ "type": "", "name" : "", "message" : "" }';
+		responseJSON.type =  'error';
+		responseJSON.name = "Web call error";
 		responseJSON.message =  err;
-		responseJSON.resultCode =  -10;
+		console.log(err);
+	}
+
+	return responseJSON;
+
+}
+
+
+
+const prudens_deduce = async (policy, context) => {
+
+	responseJSON = '{ "context": [], "inferences" : [], "facts" : [], "graph" : {}, "dilemmas" : [], "defeatedRules" : [], logs : [] }';
+
+	try {
+
+		if (policy != '')
+			policy = policy + '\n';
+
+		if (context != '')
+			context = context + '\n';
+
+		let serviceURL = serverURL + '/app/deduce';
+		console.log(serviceURL);
+
+		const response = await fetch(serviceURL, {
+			method: 'POST',
+			body: JSON.stringify({policyString: policy, contextString: context}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+
+		if (!response.ok) {
+			console.log(response);
+			throw new Error(`Error! Status: ${response.status}`);
+		}
+
+		responseJSON = await response.json();
+		console.log(responseJSON);
+	}
+
+	catch (err) {
+		responseJSON = '{ "type": "", "name" : "", "message" : "" }';
+		responseJSON.type =  'error';
+		responseJSON.name = "Web call error";
+		responseJSON.message =  err;
 		console.log(err);
 	}
 

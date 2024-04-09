@@ -8,24 +8,24 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="nestor-index.css" media="screen" rel="stylesheet" type="text/css"/>
         <title>
-            NESTOR - Natural languagE to Symbolic form TranslatOR (offline)
+            Contesting dialogue demo
         </title>
     </head>
 
 
-    <body onload="loadPage()">
+    <body onload="loadPage(true)">
 
 
         <div id="nestorOverlay">
             <div id="loader"></div>
-            <div id="textOverlay">Establishing connection to NESTOR Web Service...</div>
+            <div id="textOverlay">Establishing connection to Prudens Web Service...</div>
         </div>
 
 
         <div style="display:none;" id="nestorPageContent" class="animate-bottom">
 
             <div class="header">
-                <div id="headerTextNESTOR" class="headerText">NESTOR - Natural languagE to Symbolic form TranslatOR (offline)</div>
+                <div id="headerTextNESTOR" class="headerText">Contesting dialogue demo</div>
             </div>
 
             <div class="topnav">
@@ -37,25 +37,25 @@
                 <div class="column left">
                     <div class="onTopHorizontalContainer">
                         <div  id="nlAdviceLabel" for="nlAdvice" class="textarea-label">
-                            Natural Language Advice
+                            Natural Language Arguments
                         </div>
                         <div class="actionButtonsHorizontallyEnd">
                             <i class="actionCommandIcon fa fa-solid fa-close transparent"></i>
                         </div>
                     </div>
-                    <textarea id="nlAdvice" class="textarea" placeholder="Give an advice in natural language..."></textarea>
+                    <textarea id="nlAdvice" class="textarea"></textarea>
                 </div>
             
                 <div class="column middle">
                     <div class="flexCenteredContainer">
                         <div class="actionButtonsHorizontallyCenter">
-                            <i class="actionCommandIcon fa fa-solid fa-gear tooltip" onclick="openPopup('translationSettingsPopup', editTranslationSettings)">
+                            <i class="actionCommandIcon fa fa-solid fa-gear tooltip" onclick="openPopup('translationSettingsPopup', editTranslationSettings)" style="display: none;">
                                 <span class="tooltiptext">Translation Settings</span>
                             </i>
-                            <i class="actionCommandIcon fa fa-solid fa-pencil tooltip" onclick="openPopup('editTranslationPolicyPopup', editTranslationPolicy)">
+                            <i class="actionCommandIcon fa fa-solid fa-pencil tooltip" onclick="openPopup('editTranslationPolicyPopup', editTranslationPolicy)" style="display: none;">
                                 <span class="tooltiptext">Edit Translation Policy</span>
                             </i>
-                            <i class="actionCommandIcon fa fa-brands fa-github tooltip" onclick="window.open('https://github.com/orgs/nestor-system/repositories')">
+                            <i class="actionCommandIcon fa fa-brands fa-github tooltip" onclick="window.open('https://github.com/orgs/nestor-system/repositories')" style="display: none;">
                                 <span class="tooltiptext">NESTOR GitHub Repositories</span>
                             </i>
                         </div>
@@ -63,11 +63,14 @@
                     <div class="flexCenteredContainer">
                         <div class="actionButtonsVertically">
                             <i id="animGenerate" class="actionCommandIcon fa fa-circle-o-notch fa-spin transparent" style="color: #1f74ad"></i>
-                            <i class="actionCommandIcon fa fa-solid fa-arrow-right tooltip" onclick="generateLogic(nestor_generateLogicExpressions)" style="font-size: 20px">
-                                <span class="tooltiptext">Generate Logic Expressions</span>
+                            <i class="actionCommandIcon fa fa-solid fa-chevron-right tooltip" onclick="getNextArgument()" style="font-size: 20px">
+                                <span class="tooltiptext">Next</span>
                                 </i>
-                            <i class="actionCommandIcon fa fa-solid fa-bolt tooltip" onclick="generateLogic(nestor_generateLogicPredicates)" style="font-size: 20px">
-                                <span class="tooltiptext">Generate Logic Predicates</span>
+                            <i class="actionCommandIcon fa fa-solid fa-bolt tooltip" onclick="openPopup('editTranslationPolicyPopup', inferConclusion)" style="font-size: 20px">
+                                <span class="tooltiptext">Infer Conclusion</span>
+                            </i>
+                            <i class="actionCommandIcon fa fa-solid fa-refresh tooltip" onclick="loadPage(false)" style="font-size: 20px">
+                                <span class="tooltiptext">Restart</span>
                             </i>
                             <i class="actionCommandIcon fa fa-circle-o-notch fa-spin transparent" style="color: #1f74ad"></i>
                         </div>
@@ -77,13 +80,10 @@
                 <div class="column right">
                     <div class="onTopHorizontalContainer">
                         <div  id="generatedLogicLabel" for="generatedLogic" class="textarea-label">
-                            Generated Logic
+                            Prudens Arguments
                         </div>
                         <div class="actionButtonsHorizontallyEnd">
-                            <i id="btnViewSystemOutput" class="actionCommandIcon fa fa-solid fa-eye tooltip transparent" onclick="openPopup('systemOutputPopup', viewSystemOutput)">
-                                <span class="tooltiptext">View System Output</span>
-                            </i>
-                            <i class="actionCommandIcon fa fa-circle-o-notch fa-spin transparent" style="color: #1f74ad"></i>
+                            <i class="actionCommandIcon fa fa-solid fa-close transparent"></i>
                         </div>
                     </div>
                     <textarea id="generatedLogic" class="textarea"></textarea>
@@ -101,17 +101,20 @@
                             Translation Policy
                         </div>
                         <div class="actionButtonsHorizontallyEnd">
-                            <i class="actionIcon fa fa-solid fa-eraser tooltip" onclick="clearTranslationPolicy()">
+                            <i class="actionIcon fa fa-solid fa-eraser tooltip" onclick="clearTranslationPolicy()" style="display: none;">
                                 <span class="tooltiptext">Clear</span>
                             </i>
-                            <i class="actionIcon fa fa-solid fa-rotate-right tooltip" onclick="loadTranslationPolicy()">
+                            <i class="actionIcon fa fa-solid fa-rotate-right tooltip" onclick="loadTranslationPolicy()" style="display: none;">
                                 <span class="tooltiptext">Load Default</span>
                             </i>
-                            <i class="actionIcon fa fa-solid fa-download tooltip" onclick="downloadTranslationPolicy('editTranslationPolicyPopup')">
+                            <i class="actionIcon fa fa-solid fa-download tooltip" onclick="downloadTranslationPolicy('editTranslationPolicyPopup')" style="display: none;">
                                 <span class="tooltiptext">Download</span>
                             </i>
-                            <i class="checkmark fa fa-solid fa-check tooltip" onclick="useTranslationPolicy('editTranslationPolicyPopup')">
+                            <i class="checkmark fa fa-solid fa-check tooltip" onclick="useTranslationPolicy('editTranslationPolicyPopup')" style="display: none;">
                                 <span class="tooltiptext">Use</span>
+                            </i>
+                            <i id="btnViewSystemOutput" class="actionCommandIcon fa fa-solid fa-eye tooltip transparent" onclick="openPopup('systemOutputPopup', viewSystemOutput)">
+                                <span class="tooltiptext">View System Output</span>
                             </i>
                             <i class="close fa fa-solid fa-close" onclick="closePopup('editTranslationPolicyPopup')"></i>
                         </div>

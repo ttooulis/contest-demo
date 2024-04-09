@@ -3,7 +3,7 @@ CodeMirror.defineMode("prudens", function() {
 	return {
 	  token: function(stream) {
 
-		if (stream.match(/implies|#|@KnowledgeBase|@Code|@Knowledge|@Procedures/)) {
+		if (stream.match(/implies|#|@KnowledgeBase|@Code|@Knowledge|@Procedures|<Inferences>|<Dilemmas>/)) {
 			return "keyword";
 		}
   
@@ -17,7 +17,7 @@ CodeMirror.defineMode("prudens", function() {
 		}
   
 		// Handle predicates
-		if (stream.match(/[a-z][a-zA-Z0-9_]*\(/)) {
+		if (stream.match(/reject_loan_application|accept_loan_application|[a-z][a-zA-Z0-9_]*\(/)) {
 			stream.backUp(1); // Step back to before the opening parenthesis
 			return "predicate";
 		}
