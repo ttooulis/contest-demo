@@ -3,7 +3,7 @@ CodeMirror.defineMode("prudens", function() {
 	return {
 	  token: function(stream) {
 
-		if (stream.match(/implies|#|@KnowledgeBase|@Code|@Knowledge|@Procedures|<Inferences>|<Dilemmas>/)) {
+		if (stream.match(/implies|#|reject_loan_application|-reject_loan_application|@KnowledgeBase|@Code|@Knowledge|@Procedures|<Inferences>|<Conclusions>|<Dilemmas>/)) {
 			return "keyword";
 		}
   
@@ -17,7 +17,7 @@ CodeMirror.defineMode("prudens", function() {
 		}
   
 		// Handle predicates
-		if (stream.match(/reject_loan_application|accept_loan_application|[a-z][a-zA-Z0-9_]*\(/)) {
+		if (stream.match(/[a-z][a-zA-Z0-9_]*\(/)) {
 			stream.backUp(1); // Step back to before the opening parenthesis
 			return "predicate";
 		}
@@ -39,7 +39,7 @@ CodeMirror.defineMode("prudens", function() {
 			return "literal";
 		}
   
-		if (stream.match(/::|_|!|-|;|,|\(|\)/)) {
+		if (stream.match(/::|_|!|-|;|,|\||\(|\)/)) {
 			return "operator";
 		}
   
@@ -53,6 +53,13 @@ CodeMirror.defineMIME("text/x-prudens", "prudens");
 
 
 var translationPolicyTextArea = CodeMirror.fromTextArea(document.getElementById('translationPolicy'), {
+    mode: "text/x-prudens",
+    lineNumbers: true,
+    lineWrapping: true,
+    theme: "default"
+});
+
+var formalConclusionsTextArea = CodeMirror.fromTextArea(document.getElementById('inferredFormalConclusions'), {
     mode: "text/x-prudens",
     lineNumbers: true,
     lineWrapping: true,
