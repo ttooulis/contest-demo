@@ -63,7 +63,8 @@ var formalConclusionsTextArea = CodeMirror.fromTextArea(document.getElementById(
     mode: "text/x-prudens",
     lineNumbers: true,
     lineWrapping: true,
-    theme: "default"
+    theme: "default",
+	readOnly: true  // Make the editor read-only
 });
 
 var generatedLogicTextarea = CodeMirror.fromTextArea(document.getElementById('generatedLogic'), {
