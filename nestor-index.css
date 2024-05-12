@@ -197,18 +197,24 @@ body {
 .cm-variable { color: green; }
 .cm-rname {
     color: green;
-    font-weight: bold !important;
+    font-weight: bold;
 }
 .cm-predicate {
     color: purple;
     font-weight: bold;
 }
 .cm-function {
-    color: orangered;
+    color: rgb(186, 123, 7);
     font-weight: bold;
 }
 .cm-operator {
-    color: darkred;
+    color: blue;
+    font-weight: bold;
+}
+.cm-literal {
+    color: red;
+}
+.cm-strong {
     font-weight: bold;
 }
 
