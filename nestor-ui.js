@@ -1,8 +1,8 @@
 let contestDialogue = [
-    ["Your loan application should be rejected.", "S01 :: assume implies reject_loan_application | 0;", "Bank Officer", "A1"],
+    ["Your loan application is rejected.", "S01 :: assume implies reject_loan_application | 0;", "Bank Officer", "A1"],
     ["Why is my loan application rejected?", "S02 :: assume implies -reject_loan_application | 0;", "Loan Applicant", "A2"],
     ["Your loan application has been rejected because your care-giving obligations are considered high and your credit score is low.", "S03 :: assume implies caregiving_obligations(high) | 0;\nS05 :: assume implies credit_score(low) | 0;\nJ01 :: caregiving_obligations(high), credit_score(low) implies reject_loan_application | 101;", "Bank Officer", "A3"],
-    ["My loan application should have been accepted because I am a good existing customer: I own an account for a long time and I make frequent transactions.", "J03 :: good_existing_customer implies -reject_loan_application | 103;\nD01 :: true implies account_owner_for(20, year) | 901;\nD02 :: true implies transaction_frequency(high) | 902;\nJ02 :: account_owner_for(20, year), transaction_frequency(high) implies good_existing_customer | 102;", "Loan Applicant", "A4"],
+    ["My loan application should not have been rejected because I am a good existing customer: I own an account for a long time and I make frequent transactions.", "J03 :: good_existing_customer implies -reject_loan_application | 103;\nD01 :: true implies account_owner_for_long | 901;\nD02 :: true implies transaction_frequency(high) | 902;\nJ02 :: account_owner_for_long, transaction_frequency(high) implies good_existing_customer | 102;", "Loan Applicant", "A4"],
     ["You are not qualified as a good existing customer because your account balance is low for more than one year.", "D03 :: true implies account_balance_low_more_than(1, year) | 903;\nJ04 :: account_balance_low_more_than(1, year) implies -good_existing_customer | 104;", "Bank Officer", "A5"],
     ["Why is my credit score low?", "S06 :: assume implies -credit_score(low) | 0;", "Loan Applicant", "A6"],
     ["Your credit score is considered low because it is 582.", "D07 :: true implies credit_score_value(582) | 907;\nJ05 :: credit_score_value(582) implies credit_score(low) | 105;", "Bank Officer", "A7"],
@@ -20,7 +20,7 @@ let explanations = [
     ["Applicant's credit score is considered low. ", "S05", "credit_score(low)", "Bank Officer"],
     ["Loan application should be rejected because applicant's care-giving obligations are considered high and credit score low. ", "J01", "reject_loan_application", "Bank Officer"],
     ["Loan application should not be rejected because applicant is a good existing customer. ", "J03", "-reject_loan_application", "Loan Applicant"],
-    ["Applicant owns an account for a long time. ", "D01", "account_owner_for(20, year)", "Loan Applicant"],
+    ["Applicant owns an account for a long time. ", "D01", "account_owner_for_long", "Loan Applicant"],
     ["Applicant makes frequent transactions. ", "D02 ", "transaction_frequency(high)", "Loan Applicant"],
     ["Applicant is a good existing customer because applicant owns an account for a long time and makes frequent transactions. ", "J02", "good_existing_customer", "Loan Applicant"],
     ["Applicant's account balance is low for more than one year. ", "D03", "account_balance_low_more_than(1, year)", "Bank Officer"],
@@ -274,7 +274,7 @@ async function inferConclusionMain() {
 
 		evalResult = evaluateLoanApplication(responseJSON.inferences);
 		if (evalResult == 0)
-			suggestion = "Loan application rejection must be justified!"
+			suggestion = "Loan application rejection must be supported otherwise the decision will be dismissed!"
 		else {
 			if (evalResult == 1)
 				suggestion = "Loan application rejection is not justified!"
